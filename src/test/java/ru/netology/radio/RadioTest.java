@@ -1,0 +1,83 @@
+package ru.netology.radio;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class RadioTest {
+
+
+    @Test
+    void testInitialState() {
+        Radio radio = new Radio();
+        assertEquals(0, radio.getCurrentStation());
+        assertEquals(50, radio.getCurrentVolume());
+    }
+
+    @Test
+    void testIncreaseVolume() {
+        Radio radio = new Radio();
+        radio.increaseVolume();
+        assertEquals(51, radio.getCurrentVolume());
+
+        // Проверка на максимальную громкость
+        for (int i = 0; i < 100; i++) {
+            radio.increaseVolume();
+        }
+        assertEquals(100, radio.getCurrentVolume());
+    }
+
+    @Test
+    void testDecreaseVolume() {
+        Radio radio = new Radio();
+        radio.decreaseVolume();
+        assertEquals(49, radio.getCurrentVolume());
+
+        // Проверка на минимальную громкость
+        for (int i = 0; i < 100; i++) {
+            radio.decreaseVolume();
+        }
+        assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    void testNextStation() {
+        Radio radio = new Radio();
+        radio.nextStation();
+        assertEquals(1, radio.getCurrentStation());
+
+        // Проверка перехода с 9 на 0
+        for (int i = 0; i < 9; i++) {
+            radio.nextStation();
+        }
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    void testPrevStation() {
+        Radio radio = new Radio();
+        radio.prevStation();
+        assertEquals(9, radio.getCurrentStation());
+
+        // Проверка перехода с 0 на 9
+        for (int i = 0; i < 9; i++) {
+            radio.prevStation();
+        }
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    void testSetCurrentStation() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(5);
+        assertEquals(5, radio.getCurrentStation());
+
+        // Проверка на недопустимые значения
+        radio.setCurrentStation(-1);
+        assertEquals(5, radio.getCurrentStation()); // Не должно измениться
+
+        radio.setCurrentStation(10);
+        assertEquals(5, radio.getCurrentStation()); // Не должно измениться
+    }
+}
+
