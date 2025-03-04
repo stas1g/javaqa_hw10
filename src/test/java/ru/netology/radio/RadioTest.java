@@ -79,5 +79,21 @@ public class RadioTest {
         radio.setCurrentStation(10);
         assertEquals(5, radio.getCurrentStation()); // Не должно измениться
     }
+
+
+
+    @Test
+    void testSetCurrentVolume() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(75);
+        assertEquals(75, radio.getCurrentVolume());
+
+        // Проверка на недопустимые значения
+        radio.setCurrentVolume(-1);
+        assertEquals(75, radio.getCurrentVolume()); // Не должно измениться
+
+        radio.setCurrentVolume(101);
+        assertEquals(75, radio.getCurrentVolume()); // Не должно измениться
+    }
 }
 
