@@ -11,14 +11,14 @@ public class RadioTest {
     void testInitialState() {
         Radio radio = new Radio();
         assertEquals(0, radio.getCurrentStation());
-        assertEquals(50, radio.getCurrentVolume());
+        assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
     void testIncreaseVolume() {
         Radio radio = new Radio();
         radio.increaseVolume();
-        assertEquals(51, radio.getCurrentVolume());
+        assertEquals(1, radio.getCurrentVolume());
 
         // Проверка на максимальную громкость
         for (int i = 0; i < 100; i++) {
@@ -31,7 +31,7 @@ public class RadioTest {
     void testDecreaseVolume() {
         Radio radio = new Radio();
         radio.decreaseVolume();
-        assertEquals(49, radio.getCurrentVolume());
+        assertEquals(0, radio.getCurrentVolume());
 
         // Проверка на минимальную громкость
         for (int i = 0; i < 100; i++) {
@@ -94,6 +94,36 @@ public class RadioTest {
 
         radio.setCurrentVolume(101);
         assertEquals(75, radio.getCurrentVolume()); // Не должно измениться
+    }
+
+    @Test
+    void testDefaultConstructor() {
+        Radio radio = new Radio();
+        assertEquals(0, radio.getCurrentStation());
+        assertEquals(0, radio.getCurrentVolume());
+        assertEquals(9, radio.getMaxStation());
+    }
+
+    @Test
+    void testCustomConstructor() {
+        Radio radio = new Radio(15);
+        assertEquals(14, radio.getMaxStation());
+    }
+
+    @Test
+    void testNextStationWithCustomMax() {
+        Radio radio = new Radio(15);
+        radio.setCurrentStation(14);
+        radio.nextStation();
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    void testPrevStationWithCustomMax() {
+        Radio radio = new Radio(15);
+        radio.setCurrentStation(0);
+        radio.prevStation();
+        assertEquals(14, radio.getCurrentStation());
     }
 }
 
